@@ -7,6 +7,10 @@
 			<input type="text" id="name" v-model="name" />
 		</div>
 		<div>
+			<label for="userName">Username:</label>
+			<input type="text" id="userName" v-model="userName" />
+		</div>
+		<div>
 			<label for="surname">Surname:</label>
 			<input type="text" id="surname" v-model="surname" />
 		</div>
@@ -23,7 +27,7 @@
 	</div>
 	</template>
 	
-	<script>
+	<script lang="ts">
 	import { defineComponent } from 'vue'
 	import axios from 'axios'
 	import VueAxios from 'vue-axios'
@@ -35,18 +39,15 @@
 		name: '',
 		surname: '',
 		email: '',
-		password: ''
+		password: '',
+		userName: ''
 		}
 	},
 	methods: {
 		registerUser () {
-		// Burada kullanıcının kaydını yapabilirsiniz
-		if (this.email === '' || this.password === '' || this.firstName === '' || this.lastName === '' || this.userName === '') {
-			alert('lütfen tüm alanları doldurun!')
-			return
-		}
 		const article = {
 			name: this.name,
+			username: this.userName,
 			surname: this.surname,
 			email: this.email,
 			password: this.password
@@ -57,13 +58,29 @@
 			'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}
+
+		if (this.name == '' || this.surname == '' || this.email == '' || this.password == '' || this.userName == '')
+		{
+			alert("Lutfen bos gecmeyelim !");
+			return ;
+		}
 	
 		axios.post('http://localhost:3000/auth/register', article, headers)
-		  .then(response => {
-			console.log(response.data)
-		  })
+			.then(response => {
+				if (response.data == "Error")
+				{
+					alert("Somethings wrong !  :  " + response.data);
+					return ;
+				}
+			}).catch(error => {
+					if (error.response.data.message[0] == "email must be an email") {
+						alert("Email doğru değil!")
+						return;
+					}
+					alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")
+				});
+			}
 		}
-	}
 	});
 	</script>
 	
