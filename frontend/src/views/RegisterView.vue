@@ -31,6 +31,7 @@
 	import { defineComponent } from 'vue'
 	import axios from 'axios'
 	import VueAxios from 'vue-axios'
+
 	
 	export default defineComponent({
 	name: 'RegisterView',
@@ -61,7 +62,7 @@
 
 		if (this.name == '' || this.surname == '' || this.email == '' || this.password == '' || this.userName == '')
 		{
-			alert("Lutfen bos gecmeyelim !");
+			alert("Bozuk oldu")
 			return ;
 		}
 	
@@ -88,10 +89,11 @@
 	.register {
 	max-width: 20rem;
 	margin: 0 auto;
-	padding: 1rem;
+	padding: 3rem;
 	border: 1px solid #ccc;
 	border-radius: 0.5rem;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+	background-color: #4caf50;
 	}
 	
 	h1 {
@@ -119,7 +121,8 @@
 	}
 	
 	button {
-	background-color: #4caf50;
+	background-color: #0c0a80;
+	margin-top: 30px;
 	color: white;
 	padding: 0.5rem 1rem;
 	border: none;

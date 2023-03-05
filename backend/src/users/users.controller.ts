@@ -1,16 +1,13 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { validate } from "class-validator";
 import { RegisterDto } from "src/dto/auth.dto";
+import { UsersService } from "./users.service";
 
 @Controller("auth")
 export class UsersController {
+	constructor(private userService: UsersService) {}
 	@Post("register")
-	async getAll(@Body() dto: RegisterDto): Promise<string> {
-		try {
-			await validate(dto);
-		  }
-		  catch (errors) {
-			return "Error";
-		  }
+	getAll(@Body() dto: RegisterDto) {
+		return "atariz";
 	}
 }

@@ -1,0 +1,17 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://hiqermod:123@95.70.251.21:5432/omer_db?schema=public"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  userName  String
+  lastName  String
+  email String @unique
+  hash  String @default("empty")
+}

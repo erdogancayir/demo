@@ -29,6 +29,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background-color: bisque;
 }
 
 .button-group {
