@@ -64,17 +64,15 @@ export default defineComponent({
 				this.$toast.add({ severity: 'error', summary: 'Error Message', detail: "bozuk", life: 3000 });
 				return;
 			}
-
-			axios.post('http://localhost:3000/auth/register', article, headers)
+			axios.post(process.env.VUE_APP_BACKEND_URL + '/auth/register', article, headers)
 				.then(response => {
 					if (response.data == "Error") {
-						// alert("Somethings wrong !  :  " + response.data);
-						this.$toast.add({ severity: 'error', summary: 'Error Message', detail: response.data, life: 3000 });
+						this.$toast.add({ severity: 'error', summary: 'Error', detail: response.data, life: 3000 });
 						return;
 					}
 				}).catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
-						alert("Email doğru değil!")
+						this.$toast.add({ severity: 'error', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });
 						return;
 					}
 					alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")

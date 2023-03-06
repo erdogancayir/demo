@@ -8,6 +8,6 @@ export class UsersController {
 	constructor(private userService: UsersService) {}
 	@Post("register")
 	getAll(@Body() dto: RegisterDto) {
-		return "atariz";
+		return (this.userService.register(dto));
 	}
 }

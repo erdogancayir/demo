@@ -2,9 +2,23 @@ import { validate, IsEmail, IsNotEmpty, IsString, isEmail, isEmpty, isNotEmpty, 
 import { plainToInstance } from 'class-transformer';
 
 export class RegisterDto {
-	name: string;
-	username: string;
-	lastname: string;
-	email: string;
-	password: string;
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    password: string;
+
+    @IsString()
+    @IsNotEmpty()
+    firstName: string;
+
+    @IsString()
+    @IsNotEmpty()
+    lastName: string;
+
+    @IsString()
+    @IsNotEmpty()
+    userName: string;
 }

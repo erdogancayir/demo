@@ -11,14 +11,15 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 export default defineComponent({
   methods: {
     registerFunc () {
       this.$router.push({ path: '/register' })
-    }
+    },
   }
-
 })
 </script>
 
