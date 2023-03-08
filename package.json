@@ -4,6 +4,7 @@
     "vue-toasted": "^1.1.28"
   },
   "devDependencies": {
+    "@types/node": "^18.14.6",
     "prisma": "^4.11.0"
   }
 }
