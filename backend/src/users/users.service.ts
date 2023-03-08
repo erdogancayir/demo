@@ -13,24 +13,27 @@ export class UsersService
 
     async register(dto: RegisterDto)
     {
-		console.log(dto.userName);
-        const hash = await argon.hash(dto.password);
-        const user = await this.prisma.user.create({
-            data: {
-                email: dto.email,
-                hash: hash,
-                firstName: dto.firstName,
-                lastName: dto.lastName,
-                userName: dto.userName,
-            }
-        });
+        try
+        {
+            const hash = await argon.hash(dto.password);
+            const user : string | any = await this.prisma.user.create({
+                data: {
+                    email: dto.email,
+                    hash: hash,
+                    firstName: dto.firstName,
+                    lastName: dto.lastName,
+                    userName: dto.userName,
+                }
+            });
+        console.log(user);
         user.winCount = 0;
         user.lossCount = 0;
         return "success";
-    }
-    catch (error) {
-        if (error.code === "P2002")
-            return ("Mail Duplicate!");
-        return ("Unknown Error!");
+        }
+        catch (error) {
+            if (error.code === "P2002")
+                return ("Mail Duplicate!");
+            return ("Unknown Error!");
+        }
     }
 }

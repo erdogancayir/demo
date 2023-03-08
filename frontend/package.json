@@ -15,7 +15,8 @@
     "vue-axios": "^3.5.2",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",
-    "vue-toasted": "^1.1.28"
+    "vue-toasted": "^1.1.28",
+    "vue3-cookies": "^1.0.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

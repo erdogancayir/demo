@@ -70,6 +70,11 @@ export default defineComponent({
 						this.$toast.add({ severity: 'error', summary: 'Error', detail: response.data, life: 3000 });
 						return;
 					}
+					else if (response.data == "Mail Duplicate!")
+					{
+						this.$toast.add({ severity: 'error', summary: response.data, detail: response.data, life: 3000 });
+						return ;
+					}
 				}).catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
 						this.$toast.add({ severity: 'error', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });
