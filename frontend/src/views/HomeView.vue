@@ -3,7 +3,7 @@
     <h1>Hoş Geldiniz!</h1>
     <div class="button-group">
       <button @click="registerFunc()" class="register-button">Kayıt Ol</button>
-      <button class="login-button">Giriş Yap</button>
+      <button @click="signIn()">Giriş Yap</button>
     </div>
   </div>
 </template>
@@ -19,6 +19,9 @@ export default defineComponent({
     registerFunc () {
       this.$router.push({ path: '/register' })
     },
+    signIn () {
+      this.$router.push({ path: '/signIn' })
+    }
   }
 })
 </script>
