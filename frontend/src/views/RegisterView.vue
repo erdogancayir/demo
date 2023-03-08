@@ -4,7 +4,7 @@
 		<form>
 			<div>
 				<label for="name">Name:</label>
-				<input type="text" id="name" v-model="name" />
+				<input type="text" id="name" v-model="firstName" />
 			</div>
 			<div>
 				<label for="userName">Username:</label>
@@ -12,7 +12,7 @@
 			</div>
 			<div>
 				<label for="surname">Surname:</label>
-				<input type="text" id="surname" v-model="surname" />
+				<input type="text" id="surname" v-model="lastName" />
 			</div>
 			<div>
 				<label for="email">Email:</label>
@@ -37,8 +37,8 @@ export default defineComponent({
 	name: 'RegisterView',
 	data() {
 		return {
-			name: '',
-			surname: '',
+			firstName: '',
+			lastName: '',
 			email: '',
 			password: '',
 			userName: ''
@@ -47,9 +47,9 @@ export default defineComponent({
 	methods: {
 		registerUser() {
 			const article = {
-				name: this.name,
-				username: this.userName,
-				surname: this.surname,
+				firstName: this.firstName,
+				userName: this.userName,
+				lastName: this.lastName,
 				email: this.email,
 				password: this.password
 			}
@@ -60,7 +60,7 @@ export default defineComponent({
 				}
 			}
 
-			if (this.name == '' || this.surname == '' || this.email == '' || this.password == '' || this.userName == '') {
+			if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '' || this.userName == '') {
 				this.$toast.add({ severity: 'error', summary: 'Error Message', detail: "bozuk", life: 3000 });
 				return;
 			}
