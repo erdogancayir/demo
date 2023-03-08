@@ -4,7 +4,7 @@
 		<form>
 			<div>
 				<label for="name">Name:</label>
-				<input type="text" id="name" v-model="firstName" />
+				<input type="text" id="name" v-model="name" />
 			</div>
 			<div>
 				<label for="userName">Username:</label>
@@ -12,7 +12,7 @@
 			</div>
 			<div>
 				<label for="surname">Surname:</label>
-				<input type="text" id="surname" v-model="lastName" />
+				<input type="text" id="surname" v-model="surname" />
 			</div>
 			<div>
 				<label for="email">Email:</label>
@@ -37,19 +37,19 @@ export default defineComponent({
 	name: 'RegisterView',
 	data() {
 		return {
+			name: '',
+			surname: '',
 			email: '',
 			password: '',
-			firstName: '',
-			lastName: '',
 			userName: ''
 		}
 	},
 	methods: {
 		registerUser() {
 			const article = {
-				firstName: this.firstName, 
-				userName: this.userName,
-				lastName: this.lastName,
+				name: this.name,
+				username: this.userName,
+				surname: this.surname,
 				email: this.email,
 				password: this.password
 			}
@@ -59,17 +59,17 @@ export default defineComponent({
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
 			}
-			if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '' || this.userName == '') {
+
+			if (this.name == '' || this.surname == '' || this.email == '' || this.password == '' || this.userName == '') {
 				this.$toast.add({ severity: 'error', summary: 'Error Message', detail: "bozuk", life: 3000 });
 				return;
 			}
-			axios.post('http://localhost:3000/auth/register', article, headers)
+			axios.post(process.env.VUE_APP_BACKEND_URL + '/auth/register', article, headers)
 				.then(response => {
 					if (response.data == "Error") {
 						this.$toast.add({ severity: 'error', summary: 'Error', detail: response.data, life: 3000 });
+						return;
 					}
-					alert("Kayıt Başarılı");
-						this.$router.push({ path: 'singIn' });
 				}).catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
 						this.$toast.add({ severity: 'error', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "lossCount" INTEGER DEFAULT 0,
+ADD COLUMN     "winCount" INTEGER DEFAULT 0;
