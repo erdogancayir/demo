@@ -1,12 +1,9 @@
-import { Body, Controller, Get, Injectable, Post, Req, UseGuards } from "@nestjs/common";
-import { validate } from "class-validator";
-import { RegisterDto, singInDto } from "src/dto/auth.dto";
-import { UsersService } from "./users.service";
-import { Request } from 'express';
-import { JwtGuard } from '../guard/jwt.guard';
+import { JwtGuard } from './../auth/guard/jwt.guard';
+import { Body, Controller, Get, Injectable, Req, UseGuards  } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { Request } from 'express';
+import { UserDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserDto } from "src/dto/user.dto";
 
 @Controller("auth")
 @Injectable({})
