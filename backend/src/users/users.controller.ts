@@ -7,7 +7,12 @@ import { UsersService } from "./users.service";
 export class UsersController {
 	constructor(private userService: UsersService) {}
 	@Post("register")
-	getAll(@Body() dto: RegisterDto) {
+	register(@Body() dto: RegisterDto) {
 		return (this.userService.register(dto));
+	}
+
+	@Post("signIn")
+	signIn(@Body() dto: RegisterDto) {
+		return (this.userService.signIn(dto));
 	}
 }

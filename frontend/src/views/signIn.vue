@@ -20,6 +20,7 @@ import { defineComponent } from "vue";
 import axios from 'axios'
 import { useCookies } from 'vue3-cookies'
 import VueAxios from 'vue-axios';  
+const { cookies } = useCookies();
 
 export default defineComponent({
 	data() {
@@ -42,11 +43,15 @@ export default defineComponent({
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }
-	  axios.post("http://127.0.0.1:3000/auth/login", article, headers)
+	  axios.post(process.env.VUE_APP_BACKEND_URL + '/auth/signIn', article, headers)
 	  .then(response => {
+		if (response.data == "Wrong Email Or Password!") {
+			this.$toast.add({ severity: 'Email veya şifre yanlış!', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });
+            return;
+          }
 		cookies.set("token", response.data, "15MIN");
 	  }).catch(error => {
-		alert('ERROR !');
+		this.$toast.add({ severity: 'ERROR !', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });
 	  });
 	  },
 	},
@@ -54,7 +59,7 @@ export default defineComponent({
 
   </script>
   
-  <style>
+  <style lang="css" scoped>
   .container {
     margin-top: 50px;
   }

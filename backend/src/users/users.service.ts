@@ -36,4 +36,49 @@ export class UsersService
             return ("Unknown Error!");
         }
     }
+
+    async signIn(dto: RegisterDto) {
+        const user: string | any = await this.prisma.user.findUnique({
+            where: {
+                email: dto.email,
+            },
+        });
+        if (!user)
+            return ("Wrong Email Or Password!");
+
+        return await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
+    }
+
+    async signToken(
+        userId: number,
+        email: string,
+        firstName: string,
+        lastName: string,
+        userName: string,
+        winCount: number,
+        lossCount: number,
+    ): Promise<string> {
+        const payload = {
+            id: userId,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            userName: userName,
+            winCount: winCount,
+            lossCount: lossCount,
+        };
+
+        const secret = await this.config.get('JWT_SECRET');
+        console.log(payload);
+        console.log("selam");
+        const token = await this.jwt.signAsync(
+            payload,
+            {
+                expiresIn: '15m',
+                secret: secret,
+            }
+        );
+        console.log(token);
+        return token;
+    }
 }

@@ -75,6 +75,8 @@ export default defineComponent({
 						this.$toast.add({ severity: 'error', summary: response.data, detail: response.data, life: 3000 });
 						return ;
 					}
+					this.$toast.add({ severity: 'Kayıt Başarılı', summary: response.data, detail: response.data, life: 3000 });
+          			this.$router.push({ path: 'signIn' });
 				}).catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
 						this.$toast.add({ severity: 'error', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });
