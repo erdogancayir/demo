@@ -2,9 +2,10 @@ import { Body, Delete, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import * as argon from 'argon2';
 import { ConfigService } from "@nestjs/config";
-import { RegisterDto } from "src/dto/auth.dto";
+import { RegisterDto, singInDto } from "src/dto/auth.dto";
 import { JwtService } from "@nestjs/jwt";
 import { debugPort } from "process";
+import { validate } from "class-validator";
 
 @Injectable({})
 export class UsersService
@@ -37,7 +38,7 @@ export class UsersService
         }
     }
 
-    async signIn(dto: RegisterDto) {
+    async signIn(dto: singInDto) {
         const user: string | any = await this.prisma.user.findUnique({
             where: {
                 email: dto.email,
@@ -69,8 +70,6 @@ export class UsersService
         };
 
         const secret = await this.config.get('JWT_SECRET');
-        console.log(payload);
-        console.log("selam");
         const token = await this.jwt.signAsync(
             payload,
             {

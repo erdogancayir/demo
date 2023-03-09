@@ -9,5 +9,4 @@ import { JwtStrategy } from "../strategy";
     providers: [UsersService, JwtStrategy], 
     imports: [JwtModule.register({})],
 })
-export class UsersModule {
-}
+export class UsersModule {}

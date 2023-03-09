@@ -22,3 +22,13 @@ export class RegisterDto {
     @IsNotEmpty()
     userName: string;
 }
+
+export class singInDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    password: string;
+}
