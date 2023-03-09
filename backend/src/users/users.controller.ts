@@ -22,9 +22,9 @@ export class UsersController {
 		return (this.userService.signIn(dto));
 	}
 	
-	@Get("me")
-	// @UseGuards(JwtGuard)
-	async getUser(@Req() req: Request & { user: any }){
-		return (req.user);
-	}
+	@Get('me')
+	@UseGuards(JwtGuard)
+    async getMe(@Req() req : Request) {
+      return req.user;
+    }
 }

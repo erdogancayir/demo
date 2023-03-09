@@ -1,13 +1,10 @@
 <template>
   <div class="about w3-animate-zoom">
     <br>
-
     <h1>This is an Profile page</h1>
     {{ info }}
   </div>
 </template>
-
-
   
 <script lang="ts">
 
@@ -19,12 +16,11 @@ import VueAxios from 'vue-axios'
 
 export default defineComponent({
   data() {
-    return { info: "" };
+    return { info: "efe" };
   },
   beforeMount() {
     if (cookies.get("token") == null)
       this.$router.push({ path: '/' });
-
     setTimeout(this.GetUserData, 50);
   },
   methods: {

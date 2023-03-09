@@ -54,6 +54,11 @@ export default defineComponent({
 						alert("Email veya şifre yanlış!")
 						return;
 					}
+					document.cookie = "token=" + response.data;
+
+					this.$router.push({ path: '/profile' }).then(() => {
+            		window.location.reload();
+          			});
 				})
 				.catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
