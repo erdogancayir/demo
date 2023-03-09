@@ -1,5 +1,5 @@
 <template>
-  <div class="about w3-animate-zoom">
+  <div>
     <br>
     <h1>This is an Profile page</h1>
     {{ info }}
@@ -16,7 +16,7 @@ import VueAxios from 'vue-axios'
 
 export default defineComponent({
   data() {
-    return { info: "efe" };
+    return { info: "" };
   },
   beforeMount() {
     if (cookies.get("token") == null)
@@ -25,12 +25,22 @@ export default defineComponent({
   },
   methods: {
     async GetUserData() {
-      const responseInfo = await fetch('http://localhost:3000/users/me', {
-        headers: {
-          'Authorization': 'Bearer ' + cookies.get("token")
+      try {
+        const responseInfo = await fetch('http://localhost:3000/auth/me', {
+          headers: {
+            'Authorization': 'Bearer ' + cookies.get("token")
+          }
+        });
+        if (responseInfo.ok) {
+          this.info = await responseInfo.json();
+          console.log(this.info);
+        } else {
+          console.error('Response not ok');
         }
-      });
-      this.info = await responseInfo.json();
+      }
+      catch (error) {
+        console.error(error);
+      }
     }
   }
 });
