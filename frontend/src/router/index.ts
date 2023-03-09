@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/signIn',
     name: 'signIn',
     component: () => import('../views/signIn.vue')
-  }
+  },
 ]
 
 const router = createRouter({
