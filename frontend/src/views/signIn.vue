@@ -1,18 +1,15 @@
 <template>
 	<div class="container">
-	  <form @submit.prevent="submitForm">
 		<h1>Sign In</h1>
-		<div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 		<div class="form-group">
 		  <label for="username">Username:</label>
-		  <input type="text" id="username" name="username" v-model="username">
+		  <input type="text" id="username" name="email" v-model="email">
 		</div>
 		<div class="form-group">
 		  <label for="password">Password:</label>
 		  <input type="password" id="password" name="password" v-model="password">
 		</div>
 		<button type="submit">Sign In</button>
-	  </form>
 	</div>
   </template>
   
@@ -25,7 +22,7 @@
   
   export default {
 	data() {
-    return {
+	return {
       email: "",
       password: "",
       intra: false
@@ -47,7 +44,7 @@
         }
       }
 
-      axios.post("http://127.0.0.1:3000/auth/signin", article, headers)
+      axios.post("http://127.0.0.1:3000/auth/signIn", article, headers)
         .then(response => {
           if (response.data == "Wrong Email Or Password!") {
             alert("Email veya şifre yanlış!")

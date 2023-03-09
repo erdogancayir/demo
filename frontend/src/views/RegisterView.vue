@@ -2,23 +2,23 @@
 	<div class="register">
 		<h1>Register</h1>
 		<form>
-			<div>
+			<div class="form-group">
 				<label for="name">Name:</label>
 				<input type="text" id="name" v-model="firstName" />
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="userName">Username:</label>
 				<input type="text" id="userName" v-model="userName" />
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="surname">Surname:</label>
 				<input type="text" id="surname" v-model="lastName" />
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="email">Email:</label>
 				<input type="email" id="email" v-model="email" />
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="password">Password:</label>
 				<input type="password" id="password" v-model="password" />
 			</div>
@@ -91,48 +91,65 @@ export default defineComponent({
 	
 <style scoped>
 .register {
-	max-width: 20rem;
-	margin: 0 auto;
-	padding: 3rem;
-	border: 1px solid #ccc;
-	border-radius: 0.5rem;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-	background-color: #8a8383;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+form {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 20px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
-	font-size: 1.5rem;
-	margin-bottom: 1rem;
+  margin: 0 0 20px;
+  color: #8a8383;
 }
 
-form div {
-	margin-bottom: 0.5rem;
+.form-group {
+  margin-bottom: 10px;
 }
 
 label {
-	display: block;
-	margin-bottom: 0.25rem;
-	font-weight: bold;
+  margin-right: 10px;
 }
 
 input {
-	padding: 0.5rem;
-	font-size: 1rem;
-	border-radius: 0.25rem;
-	border: none;
-	box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-	width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 button {
-	background-color: #0c0a80;
-	margin-top: 30px;
-	color: white;
-	padding: 0.5rem 1rem;
-	border: none;
-	border-radius: 0.25rem;
-	font-size: 1rem;
-	cursor: pointer;
+  background-color: #000000;
+  color: rgb(249, 249, 249);
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
 }
 </style>
-	
