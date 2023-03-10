@@ -24,7 +24,7 @@ export class UsersController {
 	}
 	
 	@Get('me')
-	//@UseGuards(JwtGuard)
+	@UseGuards(JwtGuard)
     async getMe(@Req() req : Request) {
       return (req.user);
     }
