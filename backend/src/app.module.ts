@@ -8,9 +8,12 @@ import { BookmarkModule } from './bookmark/bookmark.module';
 
 
 @Module({
-  imports: [UsersModule, PrismaModule,  ConfigModule.forRoot({
-    isGlobal : true,
-  })],
+  imports: [
+    UsersModule,
+    PrismaModule,
+    ConfigModule.forRoot({
+      isGlobal : true,
+    })],
   controllers: [AppController],
   providers: [AppService],
 })

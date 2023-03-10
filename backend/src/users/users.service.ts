@@ -45,9 +45,8 @@ export class UsersService
                 email: dto.email,
             },
         });
-        if (!user || await argon.verify(user.hash, dto.password) == null) {
+        if (!user || await argon.verify(user.hash, dto.password) == false)
             return "fail";
-        }
         return await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
     }
 
@@ -80,6 +79,9 @@ export class UsersService
         );
         return token;
     }
+
+
+    
 
     async Intra(intra: Intra) {
         const form = new FormData();
@@ -133,12 +135,12 @@ export class UsersService
         const jwtToken = await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
         if (firstSingIn) {
             const serverUrl = await app.getUrl();
-            await fetch(serverUrl + "/users/uploadImageWithUrl?link=" + dataInfo.image.link, {
+            /* await fetch(serverUrl + "/users/uploadImageWithUrl?link=" + dataInfo.image.link, {
                 method: "POST",
                 headers: {
                     'Authorization': 'Bearer ' + jwtToken
                 }
-            });
+            }); */
         }
 
         return jwtToken;

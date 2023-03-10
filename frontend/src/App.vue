@@ -7,6 +7,7 @@
     <button @click="signOut()">Sign Out</button>
   </nav>
   <nav v-if="!isSigned">
+    <router-link to="/">Home</router-link> |
     <router-link to="/signIn">Sign in</router-link> |
     <router-link to="/about">About</router-link> 
   </nav>

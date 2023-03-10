@@ -5,23 +5,23 @@
 		<form>
 			<div class="form-group">
 				<label for="name">Name:</label>
-				<input type="text" id="name" v-model="firstName" />
+				<input @keyup.enter="registerUser" type="text" id="name" v-model="firstName" />
 			</div>
 			<div class="form-group">
 				<label for="userName">Username:</label>
-				<input type="text" id="userName" v-model="userName" />
+				<input @keyup.enter="registerUser" type="text" id="userName" v-model="userName" />
 			</div>
 			<div class="form-group">
 				<label for="surname">Surname:</label>
-				<input type="text" id="surname" v-model="lastName" />
+				<input @keyup.enter="registerUser" type="text" id="surname" v-model="lastName" />
 			</div>
 			<div class="form-group">
 				<label for="email">Email:</label>
-				<input type="email" id="email" v-model="email" />
+				<input @keyup.enter="registerUser" type="email" id="email" v-model="email" />
 			</div>
 			<div class="form-group">
 				<label for="password">Password:</label>
-				<input type="password" id="password" v-model="password" />
+				<input @keyup.enter="registerUser" type="password" id="password" v-model="password" />
 			</div>
 			<button type="button" @click="registerUser">Register</button>
 		</form>
@@ -64,7 +64,7 @@ export default defineComponent({
 			}
 
 			if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '' || this.userName == '') {
-				this.$toast.add({ severity: 'error', summary: 'Error Message', detail: "bozuk", life: 3000 });
+				this.$toast.add({ severity: 'error', summary: 'Error', detail: "Blank text", life: 3000 });
 				return;
 			}
 			axios.post(process.env.VUE_APP_BACKEND_URL + '/auth/register', article, headers)
@@ -75,14 +75,14 @@ export default defineComponent({
 					}
 					else if (response.data == "Mail Duplicate!")
 					{
-						this.$toast.add({ severity: 'error', summary: response.data, detail: response.data, life: 3000 });
+						this.$toast.add({ severity: 'error', summary: 'Error', detail: response.data, life: 3000 });
 						return ;
 					}
 					this.$toast.add({ severity: 'Kayıt Başarılı', summary: response.data, detail: response.data, life: 3000 });
           			this.$router.push({ path: 'signIn' });
 				}).catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
-						this.$toast.add({ severity: 'error', summary: 'email must be an email', detail: "Email doğru değil!", life: 3000 });
+						this.$toast.add({ severity: 'error', summary: 'Error', detail: "E-mail must be e-mail!", life: 3000 });
 						return;
 					}
 					alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")

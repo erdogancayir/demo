@@ -6,10 +6,4 @@ import { RegisterDto } from "src/dto/auth.dto";
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-     console.log('Hello World!');
-     return 'Hello World!';
-  }
 }

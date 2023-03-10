@@ -20,7 +20,6 @@
 
 import { defineComponent } from 'vue'
 import axios from 'axios'
-import VueAxios from 'vue-axios'
 import { useCookies } from 'vue3-cookies';
 const { cookies } = useCookies();
 

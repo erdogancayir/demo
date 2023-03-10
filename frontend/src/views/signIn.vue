@@ -3,12 +3,12 @@
 	<div class="container">
 		<h1>Sign In</h1>
 		<div class="form-group">
-			<label for="username">Username:</label>
-			<input type="text" id="username" name="email" v-model="email">
+			<label for="username">E-mail:</label>
+			<input @keyup.enter="GetTokenWithSingIn" type="text" id="username" name="email" v-model="email">
 		</div>
 		<div class="form-group">
 			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" v-model="password">
+			<input @keyup.enter="GetTokenWithSingIn" type="password" id="password" name="password" v-model="password">
 		</div>
 		<button type="button" @click="GetTokenWithSingIn">Sign In</button>
 	</div>
@@ -35,7 +35,7 @@ export default defineComponent({
 	methods: {
 		GetTokenWithSingIn() {
 			if (this.email == "" || this.password == "") {
-				this.$toast.add({ severity: 'SignIn Empty', summary: 'Error Message', detail: "bozuk", life: 3000 });
+				this.$toast.add({ severity: 'SignIn Empty', summary: 'Error Message', detail: "Blank text", life: 3000 });
 				return;
 			}
 			const article = {
@@ -66,11 +66,7 @@ export default defineComponent({
           			});
 				})
 				.catch(error => {
-					if (error.response.data.message[0] == "email must be an email") {
-						alert("Email doğru değil!")
-						return;
-					}
-					alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")
+					alert("Something went wrong!")
 				});
 		},
 		start() {
