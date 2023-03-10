@@ -1,4 +1,5 @@
 <template>
+	{{ start() }}
 	<div class="register">
 		<h1>Register</h1>
 		<form>
@@ -31,6 +32,8 @@
 import { defineComponent } from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { useCookies } from 'vue3-cookies'
+const { cookies } = useCookies();
 
 
 export default defineComponent({
@@ -84,6 +87,10 @@ export default defineComponent({
 					}
 					alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")
 				});
+		},
+		start() {
+			if (cookies.get('token') != null)
+				this.$router.push( { path: '/' });
 		}
 	}
 });

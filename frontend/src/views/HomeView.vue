@@ -1,11 +1,16 @@
 <template>
+  {{ start() }}
 	<div class="container">
 		<h1>Hoş Geldiniz!</h1>
+    {{ start() }}
 		<div class="form-group">
       <button @click="registerFunc()" class="register-button">Kayıt Ol</button>
 		</div>
 		<div class="form-group">
 		  <button @click="signIn()" class="login-button">Giriş Yap</button>
+		</div>
+    <div class="form-group">
+      <button @click="withIntra()" class="register-button">Intra ile Giriş Yap</button>
 		</div>
 	</div>
   </template>
@@ -16,16 +21,64 @@
 import { defineComponent } from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { useCookies } from 'vue3-cookies';
+const { cookies } = useCookies();
 
 export default defineComponent({
+  data() {
+    return {
+      intra: false,
+    }
+  },
   methods: {
     registerFunc () {
-      this.$router.push({ path: '/register' })
+      if (!this.cookieCheck())
+        this.$router.push({ path: '/register' });
+    },
+    withIntra() {
+      window.open(process.env.VUE_APP_INTRA_URL, '_self');
     },
     signIn () {
-      this.$router.push({ path: '/signIn' })
+      if (!this.cookieCheck())
+        this.$router.push({ path: '/signIn' });
+    },
+    start() {
+      if (this.cookieCheck())
+        this.$router.push({ path: '/profile' });
+    },
+    cookieCheck() {
+      return cookies.get('token') == null ? false : true;
+    },
+    intraControl() {
+      var code: string | null = this.$route.query.code as string;
+      if (code == null)
+        return;
+      this.intra = true;
+      this.getTokenWithIntra(code);
+    },
+    getTokenWithIntra(code: string) {
+      const article = {
+        code: code
+      };
+      const headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      };
+      axios.post(process.env.VUE_APP_BACKEND_URL + "/auth/signin_intra", article, headers)
+        .then(response => {
+          /* this.SetTimeOut(response.data);
+          this.SocketConnect(); */
+          this.$router.push({ path: '/profile' });
+        })
+        .catch(error => {
+          alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")
+        });
     }
-  }
+  },
+  beforeMount() {
+    this.intraControl();
+  },
 })
 </script>
 

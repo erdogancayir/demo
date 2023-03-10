@@ -1,4 +1,5 @@
 <template>
+	{{ start() }}
 	<div class="container">
 		<h1>Sign In</h1>
 		<div class="form-group">
@@ -54,8 +55,12 @@ export default defineComponent({
 						alert("Email veya şifre yanlış!")
 						return;
 					}
+					else if (response.data == "fail")
+					{
+						this.$toast.add({ severity: 'error', summary: 'Description', detail: "E-mail or password wrong", life: 3000 });
+						return ;
+					}
 					document.cookie = "token=" + response.data;
-
 					this.$router.push({ path: '/profile' }).then(() => {
             		window.location.reload();
           			});
@@ -68,6 +73,10 @@ export default defineComponent({
 					alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")
 				});
 		},
+		start() {
+			if (cookies.get('token') != null)
+				this.$router.push( { path: '/' });
+		}
 	}
 });
 </script>

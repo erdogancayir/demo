@@ -32,3 +32,9 @@ export class singInDto {
     @IsNotEmpty()
     password: string;
 }
+
+export class Intra {
+    @IsString()
+    @IsNotEmpty()
+    code: string;
+}

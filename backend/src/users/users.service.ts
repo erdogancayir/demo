@@ -2,10 +2,11 @@ import { Body, Delete, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import * as argon from 'argon2';
 import { ConfigService } from "@nestjs/config";
-import { RegisterDto, singInDto } from "src/dto/auth.dto";
+import { RegisterDto, singInDto, Intra } from "src/dto/auth.dto";
 import { JwtService } from "@nestjs/jwt";
 import { debugPort } from "process";
-import { validate } from "class-validator";
+import * as bcrypt from 'bcrypt';
+import { app } from "../main"
 
 @Injectable({})
 export class UsersService
@@ -44,9 +45,9 @@ export class UsersService
                 email: dto.email,
             },
         });
-        if (!user)
-            return ("Wrong Email Or Password!");
-
+        if (!user || await argon.verify(user.hash, dto.password) == null) {
+            return "fail";
+        }
         return await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
     }
 
@@ -77,7 +78,69 @@ export class UsersService
                 secret: secret,
             }
         );
-        console.log(token);
         return token;
+    }
+
+    async Intra(intra: Intra) {
+        const form = new FormData();
+        form.append('grant_type', 'authorization_code');
+        form.append('client_id', process.env.INTRA_UID as string);
+        form.append('client_secret', process.env.INTRA_SECRET as string);
+        form.append('code', intra.code);
+        form.append('redirect_uri', process.env.INTRA_REDIRECT_URI as string);
+
+        const responseToken = await fetch('https://api.intra.42.fr/oauth/token', {
+            method: 'POST',
+            body: form
+        });
+        const dataToken = await responseToken.json();
+
+        const responseInfo = await fetch('https://api.intra.42.fr/v2/me', {
+            headers: {
+                'Authorization': 'Bearer ' + dataToken.access_token
+            }
+        });
+
+        const dataInfo = await responseInfo.json();
+
+        // dataInfo içinden istenilen datalar çekilebilir
+
+        var dto: RegisterDto = {
+            email: dataInfo.email,
+            password: process.env.BACKEND_GENERAL_SECRET_KEY as string,
+            firstName: dataInfo.first_name,
+            lastName: dataInfo.last_name,
+            userName: dataInfo.login
+        }
+
+        var firstSingIn = false;
+        var user: string | any = await this.prisma.user.findUnique({
+            where: {
+                email: dto.email,
+            },
+        });
+        if (!user) {
+            await this.register(dto);
+
+            user = await this.prisma.user.findUnique({
+                where: {
+                    email: dto.email,
+                },
+            });
+            firstSingIn = true;
+        }
+
+        const jwtToken = await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
+        if (firstSingIn) {
+            const serverUrl = await app.getUrl();
+            await fetch(serverUrl + "/users/uploadImageWithUrl?link=" + dataInfo.image.link, {
+                method: "POST",
+                headers: {
+                    'Authorization': 'Bearer ' + jwtToken
+                }
+            });
+        }
+
+        return jwtToken;
     }
 }
