@@ -84,6 +84,8 @@ export class UsersService
     
 
     async Intra(intra: Intra) {
+        console.log('geldi');
+        
         const form = new FormData();
         form.append('grant_type', 'authorization_code');
         form.append('client_id', process.env.INTRA_UID as string);
@@ -135,14 +137,13 @@ export class UsersService
         const jwtToken = await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
         if (firstSingIn) {
             const serverUrl = await app.getUrl();
-            /* await fetch(serverUrl + "/users/uploadImageWithUrl?link=" + dataInfo.image.link, {
+            await fetch(serverUrl + "/users/uploadImageWithUrl?link=" + dataInfo.image.link, {
                 method: "POST",
                 headers: {
                     'Authorization': 'Bearer ' + jwtToken
                 }
-            }); */
+            });
         }
-
         return jwtToken;
     }
 }

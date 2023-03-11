@@ -33,8 +33,22 @@ const routes: Array<RouteRecordRaw> = [
     path: '/chat',
     name: 'ChatView',
     component: () => import('../views/ChatView.vue')
-  }
-  
+  },
+  {
+    path: '/setting',
+    name: 'settingView',
+    component: () => import('../views/settingView.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404NotFound',
+    component: () => import('../views/404View.vue')
+  },
+  {
+    path: '/game',
+    name: 'GameView',
+    component: () => import('../views/GameView.vue')
+  },
 ]
 
 const router = createRouter({

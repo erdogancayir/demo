@@ -1,7 +1,11 @@
 <template>
   {{ start() }}
 	<div class="container">
-		<h1>Hoş Geldiniz!</h1>
+    <div class="jumbotron text-center">
+      <h1 style="font-family:Montserrat font-size: 3rem; font-weight: bold; color: #007bff;">Erdog & Canodis</h1>
+		  <br>
+		</div>
+    <h1>Hoş Geldiniz!</h1>
     {{ start() }}
 		<div class="form-group">
       <button @click="registerFunc()" class="register-button">Kayıt Ol</button>
@@ -22,14 +26,25 @@ import { defineComponent } from 'vue'
 import axios from 'axios'
 import { useCookies } from 'vue3-cookies';
 const { cookies } = useCookies();
+import jwt_decode, { JwtPayload } from "jwt-decode";
+import { io, connect, Socket } from "socket.io-client";
 
 export default defineComponent({
   data() {
     return {
+      global: this.$global as any,
       intra: false,
     }
   },
   methods: {
+    SocketConnect() {
+      const token = cookies.get("token");
+      if (token != null) {
+        const socketOptions = { transportOptions: { polling: { extraHeaders: { Authorization: token, } } } };
+        /* this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions); */
+        console.log("socketconnect!\n");    
+      }
+    },
     registerFunc () {
       if (!this.cookieCheck())
         this.$router.push({ path: '/register' });
@@ -64,10 +79,10 @@ export default defineComponent({
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       };
-      axios.post(process.env.VUE_APP_BACKEND_URL + "/auth/signin_intra", article, headers)
+      axios.post(process.env.VUE_APP_BACKEND_URL + "/auth/intra", article, headers)
         .then(response => {
-          /* this.SetTimeOut(response.data);
-          this.SocketConnect(); */
+          console.log("lkmfle");
+          this.SocketConnect(); 
           this.$router.push({ path: '/profile' });
         })
         .catch(error => {
@@ -77,6 +92,12 @@ export default defineComponent({
   },
   beforeMount() {
     this.intraControl();
+  },
+  beforeRouteEnter(to, from, next) {
+    var code: string | null = to.query.code as string;
+    next((vm: any) => {
+      vm.intra = (code != null);
+    })
   },
 })
 </script>
