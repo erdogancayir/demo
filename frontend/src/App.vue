@@ -8,9 +8,9 @@
     <router-link to="/about">About</router-link> 
   </nav>
   <nav v-if="!isSigned">
-    <router-link to="/" class="custom-btn btn-12"> <span>Click!</span> <span>HOME</span> </router-link>
-    <router-link to="/signIn" class="custom-btn btn-12"><span>Click!</span><span>SIGN IN</span></router-link>
-    <router-link to="/about" class="custom-btn btn-12"><span>Click!</span><span>ABOUT</span></router-link>
+    <router-link to="/" class="custom-btn btn-12" style="margin-left: 10px;"> <span>Click!</span> <span>HOME</span> </router-link>
+    <router-link to="/signIn" class="custom-btn btn-12" style="margin-left: 10px;"><span>Click!</span><span>SIGN IN</span></router-link>
+    <router-link to="/about" class="custom-btn btn-12" style="margin-left: 10px;"><span>Click!</span><span>ABOUT</span></router-link>
   </nav>
     <router-view v-slot="{ Component }">
     <keep-alive>
@@ -46,7 +46,7 @@ const { cookies } = useCookies();
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #0a67c4;
 }
 
 nav {
@@ -55,7 +55,7 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #1368bd;
 }
 
 nav a.router-link-exact-active {
