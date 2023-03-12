@@ -23,16 +23,32 @@ import axios from 'axios'
 import { useCookies } from 'vue3-cookies'
 import VueAxios from 'vue-axios';
 const { cookies } = useCookies();
+import jwt_decode, { JwtPayload } from "jwt-decode";
+import { io, connect, Socket } from "socket.io-client";
+import { sha256 } from 'js-sha256'
 
 export default defineComponent({
 	data() {
 		return {
+			global: this.$global as any,
 			email: "" as string,
 			password: "" as string,
 			intra: false as boolean
 		}
 	},
 	methods: {
+
+
+		SocketConnect() {
+			const token = cookies.get("token");
+			if (token != null) {
+				const socketOptions = { transportOptions: { polling: { extraHeaders: { Authorization: token, } } } };
+				this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions);
+				console.log("socketconnect!\n");
+
+			}
+		},
+
 		GetTokenWithSingIn() {
 			if (this.email == "" || this.password == "") {
 				this.$toast.add({ severity: 'SignIn Empty', summary: 'Error Message', detail: "Blank text", life: 3000 });
@@ -55,15 +71,14 @@ export default defineComponent({
 						alert("Email veya şifre yanlış!")
 						return;
 					}
-					else if (response.data == "fail")
-					{
+					else if (response.data == "fail") {
 						this.$toast.add({ severity: 'error', summary: 'Description', detail: "E-mail or password wrong", life: 3000 });
-						return ;
+						return;
 					}
 					document.cookie = "token=" + response.data;
 					this.$router.push({ path: '/profile' }).then(() => {
-            		window.location.reload();
-          			});
+						window.location.reload();
+					});
 				})
 				.catch(error => {
 					alert("Something went wrong!")
@@ -71,7 +86,7 @@ export default defineComponent({
 		},
 		start() {
 			if (cookies.get('token') != null)
-				this.$router.push( { path: '/' });
+				this.$router.push({ path: '/' });
 		}
 	}
 });

@@ -3,12 +3,11 @@
     <br>
     <h1>This is an Profile page</h1>
     <img src="https://pbs.twimg.com/media/EzCinAcWQAswV6i?format=jpg&name=4096x4096" class="kucuk-resim"/>
-    <!-- <input type="file" ref="fileInput" @change="handleFileUpload" /> -->
   </div>
   <br>
   <br>
   <br>
-        Name: {{ info.firstName }} <br>
+        Name: {{ info.firstName}} <br>
         Lastname : {{ info.lastName }} <br>
         Username : {{ info.userName }} <br>
         E-mail : {{ info.email }}
