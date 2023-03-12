@@ -3,17 +3,20 @@
   <nav v-if="isSigned">
     <router-link to="/profile">Profile</router-link> | 
     <router-link to="/chat">Chat</router-link> | 
+    <router-link to="/game">Game</router-link> |
     <router-link to="/setting">Settings</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/game">Game</router-link>
+    <router-link to="/about">About</router-link> 
   </nav>
   <nav v-if="!isSigned">
     <router-link to="/">Home</router-link> |
     <router-link to="/signIn">Sign in</router-link> |
     <router-link to="/about">About</router-link> 
   </nav>
-  <router-view/>
-  
+    <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
 </template>
 
 <script lang="ts">

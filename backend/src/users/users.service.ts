@@ -27,7 +27,6 @@ export class UsersService
                     userName: dto.userName,
                 }
             });
-        console.log(user);
         user.winCount = 0;
         user.lossCount = 0;
         return "success";
@@ -80,12 +79,7 @@ export class UsersService
         return token;
     }
 
-
-    
-
     async Intra(intra: Intra) {
-        console.log('geldi');
-        
         const form = new FormData();
         form.append('grant_type', 'authorization_code');
         form.append('client_id', process.env.INTRA_UID as string);
@@ -98,7 +92,7 @@ export class UsersService
             body: form
         });
         const dataToken = await responseToken.json();
-
+        
         const responseInfo = await fetch('https://api.intra.42.fr/v2/me', {
             headers: {
                 'Authorization': 'Bearer ' + dataToken.access_token
@@ -106,9 +100,7 @@ export class UsersService
         });
 
         const dataInfo = await responseInfo.json();
-
-        // dataInfo içinden istenilen datalar çekilebilir
-
+        
         var dto: RegisterDto = {
             email: dataInfo.email,
             password: process.env.BACKEND_GENERAL_SECRET_KEY as string,
@@ -116,7 +108,7 @@ export class UsersService
             lastName: dataInfo.last_name,
             userName: dataInfo.login
         }
-
+        
         var firstSingIn = false;
         var user: string | any = await this.prisma.user.findUnique({
             where: {
@@ -143,6 +135,8 @@ export class UsersService
                     'Authorization': 'Bearer ' + jwtToken
                 }
             });
+            console.log("out");
+            
         }
         return jwtToken;
     }

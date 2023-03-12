@@ -30,6 +30,15 @@ import jwt_decode, { JwtPayload } from "jwt-decode";
 import { io, connect, Socket } from "socket.io-client";
 
 export default defineComponent({
+  beforeMount() {
+    this.intraControl();
+  },
+  beforeRouteEnter(to, from, next) {
+    var code: string | null = to.query.code as string;
+    next((vm: any) => {
+      vm.intra = (code != null);
+    })
+  },
   data() {
     return {
       global: this.$global as any,
@@ -41,8 +50,7 @@ export default defineComponent({
       const token = cookies.get("token");
       if (token != null) {
         const socketOptions = { transportOptions: { polling: { extraHeaders: { Authorization: token, } } } };
-        /* this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions); */
-        console.log("socketconnect!\n");    
+          this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions);
       }
     },
     registerFunc () {
@@ -81,23 +89,16 @@ export default defineComponent({
       };
       axios.post(process.env.VUE_APP_BACKEND_URL + "/auth/intra", article, headers)
         .then(response => {
-          console.log("lkmfle");
-          this.SocketConnect(); 
-          this.$router.push({ path: '/profile' });
+          cookies.set("token", response.data);
+          // this.SocketConnect(); 
+          this.$router.push({ path: '/profile' }).then(
+            () => { this.$router.go(0); }
+          );
         })
         .catch(error => {
           alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin!")
         });
     }
-  },
-  beforeMount() {
-    this.intraControl();
-  },
-  beforeRouteEnter(to, from, next) {
-    var code: string | null = to.query.code as string;
-    next((vm: any) => {
-      vm.intra = (code != null);
-    })
   },
 })
 </script>

@@ -7,6 +7,14 @@ import { JwtGuard } from '../guard/jwt.guard';
 import { PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+function GenerateToken(length: number) {
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var token = '';
+    for (var i = 0; i < length; i++)
+        token += chars[Math.floor(Math.random() * chars.length)];
+    return token;
+}
+
 @Controller("auth")
 @Injectable({})
 export class UsersController {
@@ -24,7 +32,6 @@ export class UsersController {
 
 	@Post("intra")
 	Intra(@Body() dto: Intra) {
-		console.log(dto);
 		if (!dto)
             return ('404NotFound');
 		return (this.userService.Intra(dto));
@@ -53,6 +60,17 @@ export class UsersController {
             where: {
                 id: userJwt.id,
             },
-        })
+        });
     }
+
+	@Post('uploadImageWithUrl')
+    async uploadImageWithUrl(@Req() req: Request)
+	{
+		const link: string = req.query.link as string;
+        const imageType = "." + link.split(".").reverse()[0];
+        const userJwt: RegisterDto | any = req.user;
+        const fileName = userJwt.id + "_" + GenerateToken(20) + imageType;
+        const path = process.cwd() + '/assets/';
+		console.log("link : " + link + "\nimage type : " + imageType + "\n file name : " + fileName + "\npath : " + path);
+	}
 }

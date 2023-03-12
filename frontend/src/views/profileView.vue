@@ -41,7 +41,6 @@ export default defineComponent({
         });
         if (responseInfo.ok) {
           this.info = await responseInfo.json();
-          console.log(this.info);
         } else {
           console.error('Response not ok');
         }
