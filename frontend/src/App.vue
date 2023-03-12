@@ -1,11 +1,12 @@
 <template>
   {{ start() }}
   <nav v-if="isSigned">
-    <router-link to="/profile">Profile</router-link> | 
-    <router-link to="/chat">Chat</router-link> | 
-    <router-link to="/game">Game</router-link> |
-    <router-link to="/setting">Settings</router-link> |
-    <router-link to="/about">About</router-link> 
+    <router-link to="/profile" class="custom-btn btn-12" style="margin-left: 10px;"> <span>Click!</span> <span>PROFILE</span> </router-link>
+    <router-link to="/setting" class="custom-btn btn-12" style="margin-left: 10px;"><span>Click!</span><span>SETTINGS</span></router-link>
+    <router-link to="/chat" class="custom-btn btn-12" style="margin-left: 10px;"><span>Click!</span><span>CHAT</span></router-link>
+    <router-link to="/game" class="custom-btn btn-12" style="margin-left: 10px;"> <span>Click!</span> <span>GAME</span> </router-link>
+    <router-link to="/About" class="custom-btn btn-12" style="margin-left: 10px;"> <span>Click!</span> <span>ABOUT</span> </router-link>
+
   </nav>
   <nav v-if="!isSigned">
     <router-link to="/" class="custom-btn btn-12" style="margin-left: 10px;"> <span>Click!</span> <span>HOME</span> </router-link>
@@ -141,7 +142,7 @@ background: linear-gradient(0deg, rgb(107, 3, 13) 0%, rgb(251, 2, 2) 100%);
 }
 .btn-12 span {
   background: rgb(20, 3, 106);
-background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(79, 79, 80) 100%);
+background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(80, 79, 79) 100%);
   display: block;
   position: absolute;
   width: 130px;
