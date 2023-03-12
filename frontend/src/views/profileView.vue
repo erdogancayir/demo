@@ -4,8 +4,9 @@
     <h1>This is an Profile page</h1>
   </div>
   <div class="w3-card-4" style="max-width:800px; margin: auto;border-radius: 50%; overflow: hidden;">
-    <div class="w3-display-container w3-text-white">
-      <img :src="info == undefined ? '' : image_url + info?.profilePicture" style="width:100%">
+  <div class="w3-display-container w3-text-white">
+    <img v-if="info && info.profilePicture" :src="image_url + info.profilePicture" style="width:100%" />
+    <img v-else src="https://i.pinimg.com/474x/67/d8/37/67d8379604084dd7d7c7fa8d41f4c739.jpg" style="width:100%" />
       <!-- <button v-if="me" v-on:click="UploadImagePanel()" class="w3-display-bottomright w3-button w3-large w3-teal"
         style="margin: 15px;">+</button> -->
     </div>
