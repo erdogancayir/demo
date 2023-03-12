@@ -90,7 +90,7 @@ export default defineComponent({
       axios.post(process.env.VUE_APP_BACKEND_URL + "/auth/intra", article, headers)
         .then(response => {
           cookies.set("token", response.data);
-          // this.SocketConnect(); 
+          this.SocketConnect(); 
           this.$router.push({ path: '/profile' }).then(
             () => { this.$router.go(0); }
           );

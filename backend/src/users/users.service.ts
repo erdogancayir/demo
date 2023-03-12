@@ -129,14 +129,14 @@ export class UsersService
         const jwtToken = await this.signToken(user.id, user.email, user.firstName, user.lastName, user.userName, user.winCount, user.lossCount);
         if (firstSingIn) {
             const serverUrl = await app.getUrl();
-            await fetch(serverUrl + "/users/uploadImageWithUrl?link=" + dataInfo.image.link, {
+            await fetch(serverUrl + "/auth/uploadImageWithUrl?link=" + dataInfo.image.link, {
                 method: "POST",
                 headers: {
                     'Authorization': 'Bearer ' + jwtToken
                 }
+                
             });
             console.log("out");
-            
         }
         return jwtToken;
     }

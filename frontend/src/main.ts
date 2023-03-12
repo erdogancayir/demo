@@ -7,9 +7,9 @@ import ToastService from 'primevue/toastservice';
 import PrimeVue from 'primevue/config';
 import VueCookies, { useCookies } from "vue3-cookies";
 
-import 'primevue/resources/themes/saga-blue/theme.css' 
-import 'primevue/resources/primevue.min.css' 
-import 'primeicons/primeicons.css' 
+import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primevue/resources/primevue.min.css'
+import 'primeicons/primeicons.css'
 
 
 

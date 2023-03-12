@@ -38,14 +38,12 @@ export default defineComponent({
 	},
 	methods: {
 
-
 		SocketConnect() {
 			const token = cookies.get("token");
 			if (token != null) {
 				const socketOptions = { transportOptions: { polling: { extraHeaders: { Authorization: token, } } } };
-				this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions);
+				this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions); // belirtilen URL bir socket bağlantısı oluşturur.
 				console.log("socketconnect!\n");
-
 			}
 		},
 
@@ -76,6 +74,8 @@ export default defineComponent({
 						return;
 					}
 					document.cookie = "token=" + response.data;
+					this.SetTimeOut(response.data);
+					this.SocketConnect();
 					this.$router.push({ path: '/profile' }).then(() => {
 						window.location.reload();
 					});
@@ -87,7 +87,18 @@ export default defineComponent({
 		start() {
 			if (cookies.get('token') != null)
 				this.$router.push({ path: '/' });
-		}
+		},
+		SetTimeOut(token: string) {
+			cookies.set("token", token, "45MIN");
+			const decoded: any = jwt_decode(token);
+			setTimeout(this.TimeOut, (decoded.exp * 1000) - Date.now())
+		},
+		TimeOut() {
+			alert("Connection timed out!");
+			this.$router.push({ path: '/' }).then(() => {
+				this.$router.go(0);
+			});
+		},
 	}
 });
 </script>
