@@ -18,4 +18,5 @@ model User {
   userName  String?
   winCount  Int?  @default(0)
   lossCount Int?  @default(0)
+  profilePicture String @default("DefaultPicture")
 }

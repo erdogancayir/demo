@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Injectable, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Injectable, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { validate } from "class-validator";
 import { RegisterDto, singInDto, Intra } from "src/dto/auth.dto";
 import { UsersService } from "./users.service";
@@ -94,11 +94,21 @@ export class UsersController {
         if (user.profilePicture != "DefaultPicture")
             unlinkSync(process.cwd() + '/assets/' + user.profilePicture);
 
-        /* await this.prisma.user.update({
+        await this.prisma.user.update({
             where: {
                 id: userJwt.id,
             },
             data: { profilePicture: fileName },
-        }); */
+        });
+    }
+
+    @Get('file/DefaultPicture')
+    defaultImage(@Res() res: any) {
+        res.sendFile(process.cwd() + "/DefaultAssets/DefaultPicture.png");
+    }
+
+    @Get('file/:fileName')
+    downloadImage(@Res() res: any) {
+        res.sendFile(process.cwd() + "/assets/" + res.req.params.fileName);
     }
 }

@@ -2,15 +2,21 @@
   <div>
     <br>
     <h1>This is an Profile page</h1>
-    <img src="https://pbs.twimg.com/media/EzCinAcWQAswV6i?format=jpg&name=4096x4096" class="kucuk-resim"/>
   </div>
-  <br>
-  <br>
-  <br>
-        Name: {{ info.firstName}} <br>
-        Lastname : {{ info.lastName }} <br>
-        Username : {{ info.userName }} <br>
-        E-mail : {{ info.email }}
+  <div class="w3-card-4" style="max-width:800px; margin: auto;border-radius: 50%; overflow: hidden;">
+    <div class="w3-display-container w3-text-white">
+      <img :src="info == undefined ? '' : image_url + info?.profilePicture" style="width:100%">
+      <!-- <button v-if="me" v-on:click="UploadImagePanel()" class="w3-display-bottomright w3-button w3-large w3-teal"
+        style="margin: 15px;">+</button> -->
+    </div>
+  </div>
+    <br>
+    <br>
+    <br>
+    Name: {{ info.firstName }} <br>
+    Lastname : {{ info.lastName }} <br>
+    Username : {{ info.userName }} <br>
+    E-mail : {{ info.email }}
 </template>
   
 <script lang="ts">
@@ -23,7 +29,9 @@ import VueAxios from 'vue-axios'
 
 export default defineComponent({
   data() {
-    return { info: "" };
+    return { info: "",
+    image_url: process.env.VUE_APP_BACKEND_URL + "/auth/file/",
+    };
   },
   beforeMount() {
     if (cookies.get("token") == null)
@@ -53,7 +61,6 @@ export default defineComponent({
 </script>
 
 <style>
-
 .register {
   display: flex;
   flex-direction: column;
@@ -62,6 +69,7 @@ export default defineComponent({
   height: 100vh;
   background-color: #f2f2f2;
 }
+
 form {
   background-color: #f2f2f2;
   border-radius: 10px;
