@@ -60,13 +60,13 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #f3f3f3;
+  color: #fefefe;
 }
 </style>
 
 <style>
 body {
-  background: #e0e5ec;
+  background: #fcfcfc;
 }
 h1 {
   position: relative;

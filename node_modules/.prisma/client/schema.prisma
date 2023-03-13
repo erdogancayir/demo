@@ -19,4 +19,5 @@ model User {
   winCount  Int?  @default(0)
   lossCount Int?  @default(0)
   profilePicture String @default("DefaultPicture")
+  socketId String @default("Null")
 }

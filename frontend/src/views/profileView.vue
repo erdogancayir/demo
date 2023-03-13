@@ -61,14 +61,14 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .register {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f2f2f2;
+  background-color: #fefefe;
 }
 
 form {
@@ -89,5 +89,6 @@ form {
   border-radius: 50%;
   margin: 0 auto;
   display: block;
+  background-color: #f2f2f2;
 }
 </style>

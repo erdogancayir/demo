@@ -104,7 +104,7 @@ export class UsersController {
 
     @Get('file/DefaultPicture')
     defaultImage(@Res() res: any) {
-        res.sendFile(process.cwd() + "/DefaultAssets/DefaultPicture.png");
+        res.sendFile(process.cwd() + "/assets/DefaultPicture.png");
     }
 
     @Get('file/:fileName')

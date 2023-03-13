@@ -5,7 +5,7 @@
     </div>
   </template>
   
-  <style>
+  <style scoped>
   .not-found {
     display: flex;
     justify-content: center;

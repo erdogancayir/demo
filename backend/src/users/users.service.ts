@@ -133,7 +133,7 @@ export class UsersService {
                 }
 
             });
-            console.log("out");
+            console.log("firstSingIn yapıldı ve fotoğraf yüklendi.");
         }
         return jwtToken;
     }

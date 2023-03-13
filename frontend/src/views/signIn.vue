@@ -43,6 +43,7 @@ export default defineComponent({
 			if (token != null) {
 				const socketOptions = { transportOptions: { polling: { extraHeaders: { Authorization: token, } } } };
 				this.global.socket = io(process.env.VUE_APP_BACKEND_URL, socketOptions); // belirtilen URL bir socket bağlantısı oluşturur.
+				console.log(this.global.socket);
 				console.log("socketconnect!\n");
 			}
 		},
