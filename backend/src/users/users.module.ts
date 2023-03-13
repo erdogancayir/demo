@@ -3,6 +3,7 @@ import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
 import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy } from "../strategy";
+import { Twilio } from "twilio";
 
 @Module({
     controllers: [UsersController],

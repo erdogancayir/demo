@@ -127,7 +127,7 @@ justify-content: center;
 
 h1 {
 margin: 0 0 20px;
-color: #333333;
+color: #000000;
 }
 
 .form-group {

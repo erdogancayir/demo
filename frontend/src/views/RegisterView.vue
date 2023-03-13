@@ -1,7 +1,7 @@
 <template>
 	{{ start() }}
 	<div class="register">
-		<h1>Register</h1>
+		<h1 style="color: #030303;">REGISTER</h1>
 		<form>
 			<div class="form-group">
 				<label for="name">Name:</label>
@@ -67,19 +67,19 @@ export default defineComponent({
 				this.$toast.add({ severity: 'error', summary: 'Error', detail: "Blank text", life: 3000 });
 				return;
 			}
+
 			axios.post(process.env.VUE_APP_BACKEND_URL + '/auth/register', article, headers)
 				.then(response => {
 					if (response.data == "Error") {
 						this.$toast.add({ severity: 'error', summary: 'Error', detail: response.data, life: 3000 });
 						return;
 					}
-					else if (response.data == "Mail Duplicate!")
-					{
+					else if (response.data == "Mail Duplicate!") {
 						this.$toast.add({ severity: 'error', summary: 'Error', detail: response.data, life: 3000 });
-						return ;
+						return;
 					}
 					this.$toast.add({ severity: 'Kayıt Başarılı', summary: response.data, detail: response.data, life: 3000 });
-          			this.$router.push({ path: 'signIn' });
+					this.$router.push({ path: 'signIn' });
 				}).catch(error => {
 					if (error.response.data.message[0] == "email must be an email") {
 						this.$toast.add({ severity: 'error', summary: 'Error', detail: "E-mail must be e-mail!", life: 3000 });
@@ -90,7 +90,7 @@ export default defineComponent({
 		},
 		start() {
 			if (cookies.get('token') != null)
-				this.$router.push( { path: '/' });
+				this.$router.push({ path: '/' });
 		}
 	}
 });
@@ -98,65 +98,67 @@ export default defineComponent({
 	
 <style scoped>
 .register {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f2f2f2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-color: #f2f2f2;
+	color: #030303;
 }
 
 form {
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  padding: 20px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	background-color: #f2f2f2;
+	border-radius: 10px;
+	padding: 20px;
+	width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 h1 {
-  margin: 0 0 20px;
-  color: #8a8383;
+	margin: 0 0 20px;
+	color: #8a8383;
 }
 
 .form-group {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
+	color: #333333;
 }
 
 label {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 
 input {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  margin-bottom: 10px;
-  width: 100%;
+	padding: 10px;
+	border-radius: 10px;
+	border: none;
+	margin-bottom: 10px;
+	width: 100%;
 }
 
 button {
-  background-color: #000000;
-  color: rgb(249, 249, 249);
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 10px;
-  transition: background-color 0.2s ease;
+	background-color: #000000;
+	color: rgb(249, 249, 249);
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+	margin-bottom: 10px;
+	transition: background-color 0.2s ease;
 }
 
 button:hover {
-  background-color: #3e8e41;
+	background-color: #3e8e41;
 }
 
 .error-message {
-  color: red;
-  margin-top: 10px;
-  font-size: 14px;
+	color: red;
+	margin-top: 10px;
+	font-size: 14px;
 }
 </style>

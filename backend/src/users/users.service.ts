@@ -9,16 +9,13 @@ import * as bcrypt from 'bcrypt';
 import { app } from "../main"
 
 @Injectable({})
-export class UsersService
-{
+export class UsersService {
     constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) { }
 
-    async register(dto: RegisterDto)
-    {
-        try
-        {
+    async register(dto: RegisterDto) {
+        try {
             const hash = await argon.hash(dto.password);
-            const user : string | any = await this.prisma.user.create({
+            const user: string | any = await this.prisma.user.create({
                 data: {
                     email: dto.email,
                     hash: hash,
@@ -27,9 +24,9 @@ export class UsersService
                     userName: dto.userName,
                 }
             });
-        user.winCount = 0;
-        user.lossCount = 0;
-        return "success";
+            user.winCount = 0;
+            user.lossCount = 0;
+            return "success";
         }
         catch (error) {
             if (error.code === "P2002")
@@ -92,7 +89,7 @@ export class UsersService
             body: form
         });
         const dataToken = await responseToken.json();
-        
+
         const responseInfo = await fetch('https://api.intra.42.fr/v2/me', {
             headers: {
                 'Authorization': 'Bearer ' + dataToken.access_token
@@ -100,7 +97,7 @@ export class UsersService
         });
 
         const dataInfo = await responseInfo.json();
-        
+
         var dto: RegisterDto = {
             email: dataInfo.email,
             password: process.env.BACKEND_GENERAL_SECRET_KEY as string,
@@ -108,7 +105,7 @@ export class UsersService
             lastName: dataInfo.last_name,
             userName: dataInfo.login
         }
-        
+
         var firstSingIn = false;
         var user: string | any = await this.prisma.user.findUnique({
             where: {
@@ -134,7 +131,7 @@ export class UsersService
                 headers: {
                     'Authorization': 'Bearer ' + jwtToken
                 }
-                
+
             });
             console.log("out");
         }

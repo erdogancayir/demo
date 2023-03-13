@@ -1,7 +1,7 @@
 <template>
 	{{ start() }}
 	<div class="container">
-		<h1>Sign In</h1>
+		<h1>SIGN IN</h1>
 		<div class="form-group">
 			<label for="username">E-mail:</label>
 			<input @keyup.enter="GetTokenWithSingIn" type="text" id="username" name="email" v-model="email">
@@ -132,6 +132,7 @@ h1 {
 
 .form-group {
 	margin-bottom: 10px;
+	color: #333333;
 }
 
 label {
